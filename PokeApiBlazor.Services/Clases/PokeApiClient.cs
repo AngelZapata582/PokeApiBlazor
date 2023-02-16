@@ -22,7 +22,14 @@ namespace PokeApiBlazor.Services.Clases
 
         public async Task<IEnumerable<Pokemon>> GetAllPokemons()
         {
-            await http.GetStringAsync($"pokemon?limit=20&offset=020");
+            var pokemonList = JsonConvert.DeserializeObject<ObjectResult>(
+            await http.GetStringAsync($"pokemon?limit=20&offset=0"));
+            
+            var resultList = new List<Pokemon>();
+
+            foreach (var pokemon in pokemonList.Pokemons)
+                resultList.Add(await GetPokemon(pokemon.Name));
+            return resultList;
         }
 
         public async Task<Pokemon> GetPokemon(string name)

@@ -15,6 +15,6 @@ namespace PokeApiBlazor.Models
         public List<Type> Types { get; set; }
 
         [JsonProperty("sprites")]
-        public List<Sprite> Sprites { get; set; }
+        public Sprite Sprites { get; set; }
     }
 }

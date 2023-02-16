@@ -9,9 +9,7 @@ namespace PokeApiBlazor.Models
 {
     public class ObjectResult
     {
-        public string Next { get; set; }
-        public string Prev { get; set; }
-        [JsonProperty("result")]
-        List<Pokemon> Pokemons { get; set; }
+        [JsonProperty("results")]
+        public IEnumerable<Pokemon> Pokemons { get; set; }
     }
 }

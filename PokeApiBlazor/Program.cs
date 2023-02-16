@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PokeApiBlazor.Services.Clases;
 using PokeApiBlazor.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace PokeApiBlazor
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://pokeapi.co/api/v2/") });
-            builder.Services.AddScoped<IPokeApiClient, IPokeApiClient>();
+            builder.Services.AddScoped<IPokeApiClient, PokeApiClient>();
             await builder.Build().RunAsync();
         }
     }

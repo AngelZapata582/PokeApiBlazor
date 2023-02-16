@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeApiBlazor", "PokeApiBlazor\PokeApiBlazor.csproj", "{D962E70B-0DFE-4608-973E-AD2069217074}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeApiBlazor", "PokeApiBlazor\PokeApiBlazor.csproj", "{D962E70B-0DFE-4608-973E-AD2069217074}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeApiBlazor.Models", "PokeApiBlazor.Models\PokeApiBlazor.Models.csproj", "{BEB64D80-44DF-40B2-8992-820B807BFC4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeApiBlazor.Models", "PokeApiBlazor.Models\PokeApiBlazor.Models.csproj", "{BEB64D80-44DF-40B2-8992-820B807BFC4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeApiBlazor.Services", "PokeApiBlazor.Services\PokeApiBlazor.Services.csproj", "{D8285E5A-52EE-47EF-AA39-FDCF8CC1B1C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeApiBlazor.Services", "PokeApiBlazor.Services\PokeApiBlazor.Services.csproj", "{D8285E5A-52EE-47EF-AA39-FDCF8CC1B1C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
