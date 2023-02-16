@@ -20,16 +20,10 @@ namespace PokeApiBlazor.Services.Clases
             this.http = http;
         }
 
-        public async Task<IEnumerable<Pokemon>> GetAllPokemons()
+        public async Task<ObjectResult> GetAllPokemons(PaginationParameters parameters)
         {
-            var pokemonList = JsonConvert.DeserializeObject<ObjectResult>(
-            await http.GetStringAsync($"pokemon?limit=20&offset=0"));
-            
-            var resultList = new List<Pokemon>();
-
-            foreach (var pokemon in pokemonList.Pokemons)
-                resultList.Add(await GetPokemon(pokemon.Name));
-            return resultList;
+            return JsonConvert.DeserializeObject<ObjectResult>(
+            await http.GetStringAsync($"pokemon?limit={parameters.PageSize}&offset={parameters.Offset}"));
         }
 
         public async Task<Pokemon> GetPokemon(string name)

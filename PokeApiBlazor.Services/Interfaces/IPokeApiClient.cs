@@ -9,7 +9,7 @@ namespace PokeApiBlazor.Services.Interfaces
 {
     public interface IPokeApiClient
     {
-        Task<IEnumerable<Pokemon>> GetAllPokemons();
+        Task<ObjectResult> GetAllPokemons(PaginationParameters parameters);
         Task<Pokemon> GetPokemon(string name);
     }
 }

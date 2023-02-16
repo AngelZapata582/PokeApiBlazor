@@ -1,0 +1,52 @@
+﻿<nav>
+    <ul class="pagination justify-content-center">
+        @foreach (var item in _paginationButtons)
+        {
+            <li @onclick="()=>OnSelectedPage(item)" style="cursor:pointer" class="page-item
+                @(item.Enabled ? null:"disable")
+                @(item.Active ? "active":null)">
+                <span class="page-link" href="#">
+                    @item.Text
+                </span>
+            </li>
+        }
+    </ul>
+</nav>
+
+@code {
+    public List<PaginationButton> _paginationButtons;
+    [Parameter] public PaginationMetaData metaData { get; set; }
+    [Parameter] public EventCallback<int> SelectedPage { get; set; }
+    [Parameter] public int Spread { get; set; } //cantidad de botones a mostrar
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        CreatePaginationButton();
+    }
+
+    private void CreatePaginationButton()
+    {
+        Console.WriteLine(JsonConvert.SerializeObject(_paginationButtons));
+        _paginationButtons = new List<PaginationButton>();
+        _paginationButtons.Add(new PaginationButton(metaData.CurrentPage - 1, metaData.HasPrevious, "Previous"));
+
+        for (int i = 1; i <= metaData.TotalPages; i++)
+        {
+            if (i >= metaData.CurrentPage - Spread && i <= metaData.CurrentPage + Spread)
+                _paginationButtons.Add(new PaginationButton(i, true, i.ToString()) { Active = metaData.CurrentPage == i });
+        }
+
+        _paginationButtons.Add(new PaginationButton(metaData.CurrentPage + 1, metaData.HasNext, "Next"));
+    }
+
+    private async Task OnSelectedPage(PaginationButton button)
+    {
+        if (button.Page == metaData.CurrentPage || !button.Enabled)
+            return;
+
+        Console.WriteLine(button.Page);
+        metaData.CurrentPage = button.Page;
+        await SelectedPage.InvokeAsync(button.Page);
+    }
+}
