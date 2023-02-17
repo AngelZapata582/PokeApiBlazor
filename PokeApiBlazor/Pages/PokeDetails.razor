@@ -1,0 +1,55 @@
+﻿@page "/detail/{name}"
+@inject IPokeApiClient pokeClient
+
+@if (Pokemon is null)
+{
+    <p><em>loading...</em></p>
+}
+else
+{
+    <div class="row text-center">
+        <div class="col-sm-6">
+            <div class="mt-2">
+                <h4>@Pokemon.Name.Substring(0,1).ToUpper()@Pokemon.Name.Substring(1,Pokemon.Name.Length - 1)</h4>
+                @foreach (var item in Pokemon.Types)
+                {
+                    <span class="badge border rounded-pill bg-@item.PokemonType.Name">
+                        @item.PokemonType.Name
+                    </span>
+                }
+            </div>
+
+            <ul class="list-group list-group-flush mt-4" style="width:20rem;">
+                <li class="list-group-item bg-transparent">
+                    ID #: <b>@Pokemon.Id</b>
+                </li>
+                <li class="list-group-item bg-transparent">
+                    Base experience: <b>@Pokemon.Experience</b>
+                </li>
+                <li class="list-group-item bg-transparent">
+                    Weight: <b>@Pokemon.Weight</b>
+                </li>
+                <li class="list-group-item bg-transparent">
+                    Height: <b>@Pokemon.Height</b>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-sm-6">
+            <img src="https://img.pokemondb.net/artwork/@(Pokemon.Name).jpg" alt="@Pokemon.Name"
+            class="img-fluid d-block mx-auto"/>
+        </div>
+
+    </div>
+}
+
+@code {
+    [Parameter] public string name { get; set; }
+    public Pokemon Pokemon { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Pokemon = await pokeClient.GetPokemon(name);
+    }
+}

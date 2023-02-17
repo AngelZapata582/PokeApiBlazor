@@ -16,6 +16,11 @@ else
                             <h5 class="card-title">@item.Name</h5>
                             <img class="img-fluid" src="@item.Sprites.Front" alt="@item.Name" />
                         </div>
+                        <div class="">
+                            <span class="badge border rounded-pill bg-@(item.Types.FirstOrDefault().PokemonType.Name)">
+                                <a href="/detail/@item.Name">Leer mas.</a>
+                            </span>
+                        </div>
                     </divc>
                 }
             </div>
