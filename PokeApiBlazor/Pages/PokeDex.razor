@@ -10,12 +10,12 @@
             <Pagination metaData="paginationMetaData" Spread="5" SelectedPage="SelectedPage"/>
         </div>
     </div>
-    <PokemonGrid Pokemons="Pokemons" NumberOfRows="4" RowSize="5"/>
+    <PokemonGrid Pokemons="Pokemons" NumberOfRows="4" RowSize="4"/>
 
 </div>
 
 @code {
-    IEnumerable<Pokemon> Pokemons;
+    IEnumerable<Pokemon> Pokemons {get;set;}
     public int NumberOfRows { get; set; } = 5;
     PaginationMetaData paginationMetaData = new PaginationMetaData();
     PaginationParameters paginationParameters = new PaginationParameters();

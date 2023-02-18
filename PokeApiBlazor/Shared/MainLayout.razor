@@ -1,5 +1,5 @@
-﻿@inherits LayoutComponentBase
-
+@inherits LayoutComponentBase
+@layout FullpageComponent
 <RadzenDialog />
 <RadzenNotification />
 <RadzenContextMenu />
@@ -7,12 +7,16 @@
 
 <div class="page">
     <div class="main">
-        <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+        <div class="top-row px-4 rz-shadow-2 rz-background-color-danger">
+            
         </div>
 
         <div class="content px-4">
             @Body
+        </div>
+
+        <div class="px-4 rz-shadow-2 rz-background-color-black top-row rz-mt-auto rz-mb-0">
+            
         </div>
     </div>
 </div>

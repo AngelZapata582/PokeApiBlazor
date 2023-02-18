@@ -1,4 +1,4 @@
-﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -237,7 +237,7 @@ a, .btn-link {
     border-radius: 50%;
     overflow: hidden;
     box-shadow: inset -10px 10px 0 10px #ccc;
-    animation: fall .25s ease-in-out, shake 1.25s cubic-bezier(.36,.07,.19,.97) 3;
+    animation: fall .25s ease-in-out, shake 5.25s cubic-bezier(.36,.07,.19,.97) 3;
 }
 
     .pokeball::before,
@@ -270,7 +270,7 @@ a, .btn-link {
     border-radius: 50%;
     z-index: 10;
     box-shadow: 0 0 0 10px black;
-    animation: blink .5s alternate 7;
+    animation: blink 1s alternate 7;
 }
 /* Animation */
 @keyframes blink {
@@ -331,5 +331,4 @@ a, .btn-link {
     position:absolute;
     height:100%;
     width:100%;
-    background-color:aqua;
 }

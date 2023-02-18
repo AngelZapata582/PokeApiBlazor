@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +12,12 @@ namespace PokeApiBlazor.Models
         //[JsonProperty("accuracy")]
         //public int Accuracy { get; set; }
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; } = string.Empty;
         [JsonProperty("type")]
-        public NameUrl Type { get; set; }
+        public NameUrl? Type { get; set; } = new NameUrl();
         [JsonProperty("damage_class")]
-        public NameUrl DamageClass { get; set; }
+        public NameUrl? DamageClass { get; set; } = new NameUrl();
         [JsonProperty("generation")]
-        public NameUrl Generation { get; set; }
+        public NameUrl? Generation { get; set; } = new NameUrl();
     }
 }

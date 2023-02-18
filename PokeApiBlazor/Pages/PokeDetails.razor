@@ -7,7 +7,7 @@
 }
 else
 {
-    <div class="card bg-@Pokemon.Types.FirstOrDefault().PokemonType.Name rz-shadow-5">
+    <div class="card bg-@Pokemon.Types.FirstOrDefault().PokemonType.Name rz-shadow-5 rz-my-4">
         <div class="card-body text-dark">
             <RadzenRow class="row text-center" RowGap="1">
                 <RadzenColumn SizeSM="6">
@@ -48,11 +48,31 @@ else
                 <RadzenColumn Size="12">
                     <RadzenPanel AllowCollapse="true" Text="Movimientos" class="rz-m-4">
                         <ChildContent>
-                            <RadzenDataList TItem="Move" AllowVirtualization="true" Data="Pokemon.Moves" >
-                                <Template Context="move">
-                                    <RadzenText Text="@move.MoveD.Name" />
-                                </Template>
-                            </RadzenDataList>
+                            @if (moveDetails is null)
+                            {
+                                <p>Loading...</p>
+                            }
+                            else
+                            {
+                                <RadzenDataList Context="move" PagerHorizontalAlign="HorizontalAlign.Left" TItem="MoveDetails" AllowVirtualization="true" Data="moveDetails" WrapItems="false" Style="height: 500px;overflow:auto;">
+                                    <Template>
+                                        <RadzenCard class="col-12">
+                                            <RadzenRow>
+                                                <RadzenColumn class="justify-content-start">
+                                                    <span class="badge border rounded bg-@move.Type.Name">
+                                                        @move.Type.Name
+                                                    </span>
+                                                </RadzenColumn>
+                                                <RadzenColumn>
+                                                    <RadzenText Text="@move.DamageClass.Name" TextAlign="TextAlign.Left"/>
+                                                </RadzenColumn>
+                                                <RadzenText Text="@move.Name" TextAlign="TextAlign.Left"/>
+                                                <RadzenText Text="@move.Generation.Name" TextAlign="TextAlign.Left"/>
+                                            </RadzenRow>
+                                        </RadzenCard>
+                                    </Template>
+                                </RadzenDataList>
+                            }
                         </ChildContent>
                     </RadzenPanel>
                 </RadzenColumn>
@@ -64,15 +84,33 @@ else
 @code {
     [Parameter] public string name { get; set; }
     public Pokemon Pokemon { get; set; }
-    public List<MoveDetails> moveDetails { get; set; }
+    public List<MoveDetails> moveDetails { get; set; } = new List<MoveDetails>();
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Pokemon = await pokeClient.GetPokemon(name);
+
+        try
+        {
+            Pokemon = await pokeClient.GetPokemon(name);
+        }
+        catch (System.Exception e)
+        {
+            
+            throw e;
+        }
+
         foreach (var item in Pokemon.Moves)
         {
-            var result = await pokeClient.GetMoveDetails(item.MoveD.Name);
-            moveDetails.Add(result);
+            try
+            {
+                var result = await pokeClient.GetMoveDetails(item.MoveD.Name);
+                moveDetails.Add(result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
