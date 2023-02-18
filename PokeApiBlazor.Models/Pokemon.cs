@@ -24,5 +24,7 @@ namespace PokeApiBlazor.Models
         public int Experience { get; set; }
         [JsonProperty("id")]
         public int Id { get; set; }
+        [JsonProperty("moves")]
+        public List<Move> Moves { get; set; }
     }
 }

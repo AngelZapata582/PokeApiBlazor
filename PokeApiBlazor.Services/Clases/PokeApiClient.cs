@@ -26,6 +26,12 @@ namespace PokeApiBlazor.Services.Clases
             await http.GetStringAsync($"pokemon?limit={parameters.PageSize}&offset={parameters.Offset}"));
         }
 
+        public async Task<MoveDetails> GetMoveDetails(string name)
+        {
+            return JsonConvert.DeserializeObject<MoveDetails>(
+                await http.GetStringAsync($"move/{name}"));
+        }
+
         public async Task<Pokemon> GetPokemon(string name)
         {
             return JsonConvert.DeserializeObject<Pokemon>(

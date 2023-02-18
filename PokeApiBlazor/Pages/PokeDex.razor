@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @inject IPokeApiClient pokeApi
 
 <h3>PokeDex</h3>
@@ -10,7 +10,7 @@
             <Pagination metaData="paginationMetaData" Spread="5" SelectedPage="SelectedPage"/>
         </div>
     </div>
-    <PokemonGrid Pokemons="Pokemons" NumberOfRows="6" />
+    <PokemonGrid Pokemons="Pokemons" NumberOfRows="4" RowSize="5"/>
 
 </div>
 
@@ -37,6 +37,7 @@
 
     private async Task SelectedPage(int page)
     {
+        Pokemons = null;
         paginationParameters.PageNumber = page;
         await GetPokemons();
     }

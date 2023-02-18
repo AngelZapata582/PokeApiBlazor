@@ -11,5 +11,6 @@ namespace PokeApiBlazor.Services.Interfaces
     {
         Task<ObjectResult> GetAllPokemons(PaginationParameters parameters);
         Task<Pokemon> GetPokemon(string name);
+        Task<MoveDetails> GetMoveDetails(string name);
     }
 }

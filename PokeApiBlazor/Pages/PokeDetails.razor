@@ -1,55 +1,78 @@
-﻿@page "/detail/{name}"
+@page "/detail/{name}"
 @inject IPokeApiClient pokeClient
 
 @if (Pokemon is null)
 {
-    <p><em>loading...</em></p>
+    <PokeLoading />
 }
 else
 {
-    <div class="row text-center">
-        <div class="col-sm-6">
-            <div class="mt-2">
-                <h4>@Pokemon.Name.Substring(0,1).ToUpper()@Pokemon.Name.Substring(1,Pokemon.Name.Length - 1)</h4>
-                @foreach (var item in Pokemon.Types)
-                {
-                    <span class="badge border rounded-pill bg-@item.PokemonType.Name">
-                        @item.PokemonType.Name
-                    </span>
-                }
-            </div>
+    <div class="card bg-@Pokemon.Types.FirstOrDefault().PokemonType.Name rz-shadow-5">
+        <div class="card-body text-dark">
+            <RadzenRow class="row text-center" RowGap="1">
+                <RadzenColumn SizeSM="6">
+                    <RadzenCard class="rz-shadow-3 rz-mx-6">
+                        <div class="rz-my-2">
+                            <h4>@Pokemon.Name.Substring(0,1).ToUpper()@Pokemon.Name.Substring(1,Pokemon.Name.Length - 1)</h4>
+                            @foreach (var item in Pokemon.Types)
+                            {
+                                <span class="badge border rounded-pill bg-@item.PokemonType.Name">
+                                    @item.PokemonType.Name
+                                </span>
+                            }
+                        </div>
+                    </RadzenCard>
 
-            <ul class="list-group list-group-flush mt-4" style="width:20rem;">
-                <li class="list-group-item bg-transparent">
-                    ID #: <b>@Pokemon.Id</b>
-                </li>
-                <li class="list-group-item bg-transparent">
-                    Base experience: <b>@Pokemon.Experience</b>
-                </li>
-                <li class="list-group-item bg-transparent">
-                    Weight: <b>@Pokemon.Weight</b>
-                </li>
-                <li class="list-group-item bg-transparent">
-                    Height: <b>@Pokemon.Height</b>
-                </li>
-            </ul>
+                    <RadzenCard class="rz-mt-4 justify-content-start d-flex rz-shadow-3 rz-mx-6">
+                        <div class="rz-mt-4 col-12 row text-left h-100">
+                            <div class=" col-6 bg-transparent">
+                                ID #: <b>@Pokemon.Id</b>
+                            </div>
+                            <div class="col-6 bg-transparent">
+                                Base experience: <b>@Pokemon.Experience</b>
+                            </div>
+                            <div class="col-6 bg-transparent">
+                                Weight: <b>@Pokemon.Weight</b>
+                            </div>
+                            <div class="col-6 bg-transparent">
+                                Height: <b>@Pokemon.Height</b>
+                            </div>
+                        </div>
+                    </RadzenCard>
+                </RadzenColumn>
+                <RadzenColumn SizeSM="6">
+                    <RadzenCard class="rz-shadow-3 rz-mx-6">
+                        <img class="img-fluid justify-content-center" src="https://img.pokemondb.net/artwork/@(Pokemon.Name).jpg" alt="@Pokemon.Name" />
+                    </RadzenCard>
+                </RadzenColumn>
+                <RadzenColumn Size="12">
+                    <RadzenPanel AllowCollapse="true" Text="Movimientos" class="rz-m-4">
+                        <ChildContent>
+                            <RadzenDataList TItem="Move" AllowVirtualization="true" Data="Pokemon.Moves" >
+                                <Template Context="move">
+                                    <RadzenText Text="@move.MoveD.Name" />
+                                </Template>
+                            </RadzenDataList>
+                        </ChildContent>
+                    </RadzenPanel>
+                </RadzenColumn>
+            </RadzenRow>
         </div>
-
-        <div class="col-sm-6">
-            <img src="https://img.pokemondb.net/artwork/@(Pokemon.Name).jpg" alt="@Pokemon.Name"
-            class="img-fluid d-block mx-auto"/>
-        </div>
-
     </div>
 }
 
 @code {
     [Parameter] public string name { get; set; }
     public Pokemon Pokemon { get; set; }
-
+    public List<MoveDetails> moveDetails { get; set; }
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         Pokemon = await pokeClient.GetPokemon(name);
+        foreach (var item in Pokemon.Moves)
+        {
+            var result = await pokeClient.GetMoveDetails(item.MoveD.Name);
+            moveDetails.Add(result);
+        }
     }
 }
